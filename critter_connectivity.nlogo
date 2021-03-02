@@ -19,13 +19,15 @@ to setup
   	set pcolor grey
     if (pxcor = 1 or pxcor = -1) [set pcolor yellow]
   	if (pxcor > 8 or pxcor < -8) [set pcolor green]
-  if bridge 
-  [
-    if (pycor < 2 and pycor > -2 and pxcor > -10 and pxcor < 10) [set pcolor brown]
+ 		if bridge 
+    [
+      if (pycor < 2 and pycor > -2 and pxcor > -10 and pxcor < 10) [set pcolor brown]
+    ]
   ]
-  ]
-  ask n-of ( (51 * bridge_cover) / 100 ) patches with [pcolor = brown] [ set pcolor green ]
-  
+  if bridge
+    [
+      ask n-of ( (51 * bridge_cover) / 100 ) patches with [pcolor = brown] [ set pcolor green ]
+  	]
   ifelse Critter = "rabbit" 
   [ setupRabbits ]
   [ ifelse Critter = "bug"
@@ -136,22 +138,24 @@ to sample-left
   output-print "left side"
   foreach x_list [
     [x] ->
-    output-print "left side"
+    output-print ""
     ;;[x] ->
     sample-sats-left x
   ]
+  output-print ""
+  output-print ""
 end
 
 to sample-sats-left [x]
   let Hsat1 one-of ["H243" "H236"]
   let Xsat1 one-of ["X122" "X130"]
   let Ksat1 one-of ["K85" "K94"]
-  let Ysat1 one-of ["Y401" "Y392"]
+  let Ysat1 one-of ["Y401" "Y399"]
   let Asat1 one-of ["A324" "A319"]
   let Hsat2 one-of ["H243" "H236"]
   let Xsat2 one-of ["X122" "X130"]
   let Ksat2 one-of ["K85" "K94"]
-  let Ysat2 one-of ["Y401" "Y392"]
+  let Ysat2 one-of ["Y401" "Y399"]
   let Asat2 one-of ["A324" "A319"]
   output-type x output-type ": " 
   output-type Hsat1 output-type "/" output-type Hsat2 output-type " " 
@@ -162,28 +166,30 @@ to sample-sats-left [x]
 end
 
 to sample-right
-  ask n-of 5 turtles with [pxcor < -8]  [ set color violet ]
+  ask n-of 5 turtles with [pxcor > 8]  [ set color violet ]
   let x_list (list 1 2 3 4 5)
   output-print "right side"
   foreach x_list [
     [x] ->
-    output-print "right side"
+    output-print ""
     ;;[x] ->
     sample-sats-right x
   ]
+  output-print ""
+  output-print ""
 end
 
 to sample-sats-right [x]
   let Hsat1 one-of ["H251" "H236"]
-  let Xsat1 one-of ["X122" "X133"]
+  let Xsat1 one-of ["X125" "X133"]
   let Ksat1 one-of ["K85" "K94"]
   let Ysat1 one-of ["Y408" "Y392"]
-  let Asat1 one-of ["A324" "A319"]
+  let Asat1 one-of ["A326" "A315"]
   let Hsat2 one-of ["H251" "H236"]
-  let Xsat2 one-of ["X122" "X133"]
+  let Xsat2 one-of ["X125" "X133"]
   let Ksat2 one-of ["K85" "K94"]
   let Ysat2 one-of ["Y408" "Y392"]
-  let Asat2 one-of ["A324" "A319"]
+  let Asat2 one-of ["A326" "A315"]
   output-type x output-type ": " 
   output-type Hsat1 output-type "/" output-type Hsat2 output-type " " 
   output-type Xsat1 output-type "/" output-type Xsat2 output-type " " 
@@ -262,7 +268,7 @@ CHOOSER
 Critter
 critter
 "rabbit" "bug" "butterfly"
-0
+1
 
 BUTTON
 90
@@ -350,83 +356,31 @@ OUTPUT
 @#$#@#$#@
 ## WHAT IS IT?
 
-This project explores a simple ecosystem made up of rabbits, grass, and weeds. The rabbits wander around randomly, and the grass and weeds grow randomly.   When a rabbit bumps into some grass or weeds, it eats the grass and gains energy. If the rabbit gains enough energy, it reproduces. If it doesn't gain enough energy, it dies.
+This project explores a simple system with a population that has been split into two by a road. The critters (rabbits, bugs, or butterflies) wander around aimlessly, but cannot cross the road. A conservation organization wants to understand if building a wildlife overpass will help these critters to become a single population again.
 
-The grass and weeds can be adjusted to grow at different rates and give the rabbits differing amounts of energy.  The model can be used to explore the competitive advantages of these variables.
+The amount of cover on the bridge (trees, shrubs, and grasses) can be adjusted from zero (open to the sky so hawks and other predators can easily see and catch the critters) to 100% (critters are completely hidden while crossing the overpass. This affects their speed and likelihood of crossing.
+
+Rabbits move the fastest, bugs move the slowest. Butterflies move quickly but frequently change direction.
 
 ## HOW TO USE IT
 
-Click the SETUP button to setup the rabbits (red), grass (green), and weeds (violet). Click the GO button to start the simulation.
+Choose a CRITTER from the dropdown box at the top, and toggle the "BRIDGE" box to choose whether a wildlife overpass has been installed. If it has been, use the BRIDGE_COVER slider to determine how much greenery is present on the overpass.
 
-The NUMBER slider controls the initial number of rabbits. The BIRTH-THRESHOLD slider sets the energy level at which the rabbits reproduce.  The GRASS-GROWTH-RATE slider controls the rate at which the grass grows.  The WEEDS-GROWTH-RATE slider controls the rate at which the weeds grow.
+Click the SETUP button to setup the CRITTERS on each side. Those that start on the left are orange, those that start on the right are purple. 
 
-The model's default settings are such that at first the weeds are not present (weeds-grow-rate = 0, weeds-energy = 0).  This is so that you can look at the interaction of just rabbits and grass.  Once you have done this, you can start to add in the effect of weeds.
+When you are done watching the CRITTERS traveling, click the HIDE HOME SIDE button to see that we can't tell the two populations apart when we don't have information about the side each CRITTER started on.
+
+We will use microsatellites, quick and relatively simple genetic markers, to figure out how mixed the populations become with and without a bridge. When you are ready, click "SAMPLE LEFT SIDE" and "SAMPLE RIGHT SIDE" to get microsatellite data from 5 CRITTERS from each side of the road.
+
+We sample five microsatellites, called H, X, K, Y, and A. Each CRITTER has two versions of each microsatellite, separated by a slash, for example H234/H246. Two CRITTERS that started out on the same side of the road will be more genetically similar to each other than they are to critters that started on the other side of the road.
+
+Can you tell how well mixed the two populations are after installing the overpass?
 
 ## THINGS TO NOTICE
 
-Watch the COUNT RABBITS monitor and the POPULATIONS plot to see how the rabbit population changes over time. At first, there is not enough grass for the rabbits, and many rabbits die. But that allows the grass to grow more freely, providing an abundance of food for the remaining rabbits. The rabbits gain energy and reproduce. The abundance of rabbits leads to a shortage of grass, and the cycle begins again.
+Watch the ticks at the top (these represent time) and see how long it takes for the first critters to get from one side to the other. At first, the populations on the two sides are very distinct, but as time goes on, you may see orange among the purple and vice versa.
 
-The rabbit population goes through a damped oscillation, eventually stabilizing in a narrow range. The total amount of grass also oscillates, out of phase with the rabbit population.
-
-These dual oscillations are characteristic of predator-prey systems. Such systems are usually described by a set of differential equations known as the Lotka-Volterra equations. NetLogo provides a new way of studying predatory-prey systems and other ecosystems.
-
-## THINGS TO TRY
-
-Leaving other parameters alone, change the grass-grow-rate and let the system stabilize again.  Would you expect that there would now be more grass?  More rabbits?
-
-Change only the birth-threshold of the rabbits.  How does this affect the steady-state levels of rabbits and grass?
-
-With the current settings, the rabbit population goes through a damped oscillation. By changing the parameters, can you create an undamped oscillation? Or an unstable oscillation?
-
-In the current version, each rabbit has the same birth-threshold. What would happen if each rabbit had a different birth-threshold? What if the birth-threshold of each new rabbit was slightly different from the birth-threshold of its parent? How would the values for birth-threshold evolve over time?
-
-Now add weeds by making the sliders WEEDS-GROW-RATE the same as GRASS-GROW-RATE and WEEDS-ENERGY the same as GRASS-ENERGY.  Notice that the amount of grass and weeds is about the same.
-
-Now make grass and weeds grow at different rates.  What happens?
-
-What if the weeds grow at the same rate as grass, but they give less energy to the rabbits when eaten (WEEDS-ENERGY is less than GRASS-ENERGY)?
-
-Think of other ways that two plant species might differ and try them out to see what happens to their relative populations.  For example, what if a weed could grow where there was already grass, but grass couldn't grow where there was a weed?  What if the rabbits preferred the plant that gave them the most energy?
-
-Run the model for a bit, then suddenly change the birth threshold to zero.  What happens?
-
-## NETLOGO FEATURES
-
-Notice that every black patch has a random chance of growing grass or
-weeds each turn, using the rule:
-
-    if random-float 1000 < weeds-grow-rate
-      [ set pcolor violet ]
-    if random-float 1000 < grass-grow-rate
-      [ set pcolor green ]
-
-## RELATED MODELS
-
-Wolf Sheep Predation is another interacting ecosystem with different rules.
-
-## HOW TO CITE
-
-If you mention this model or the NetLogo software in a publication, we ask that you include the citations below.
-
-For the model itself:
-
-* Wilensky, U. (2001).  NetLogo Rabbits Grass Weeds model.  http://ccl.northwestern.edu/netlogo/models/RabbitsGrassWeeds.  Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
-
-Please cite the NetLogo software as:
-
-* Wilensky, U. (1999). NetLogo. http://ccl.northwestern.edu/netlogo/. Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
-
-## COPYRIGHT AND LICENSE
-
-Copyright 2001 Uri Wilensky.
-
-![CC BY-NC-SA 3.0](http://ccl.northwestern.edu/images/creativecommons/byncsa.png)
-
-This work is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License.  To view a copy of this license, visit https://creativecommons.org/licenses/by-nc-sa/3.0/ or send a letter to Creative Commons, 559 Nathan Abbott Way, Stanford, California 94305, USA.
-
-Commercial licenses are also available. To inquire about commercial licenses, please contact Uri Wilensky at uri@northwestern.edu.
-
-This model was created as part of the projects: PARTICIPATORY SIMULATIONS: NETWORK-BASED DESIGN FOR SYSTEMS LEARNING IN CLASSROOMS and/or INTEGRATED SIMULATION AND MODELING ENVIRONMENT. The project gratefully acknowledges the support of the National Science Foundation (REPP & ROLE programs) -- grant numbers REC #9814682 and REC-0126227.
+How does the amount of cover on the overpass affect this?
 
 <!-- 2001 -->
 @#$#@#$#@
@@ -639,6 +593,22 @@ false
 0
 Rectangle -7500403 true true 30 30 270 270
 Rectangle -16777216 true false 60 60 240 240
+
+squirrel
+false
+0
+Polygon -7500403 true true 87 267 106 290 145 292 157 288 175 292 209 292 207 281 190 276 174 277 156 271 154 261 157 245 151 230 156 221 171 209 214 165 231 171 239 171 263 154 281 137 294 136 297 126 295 119 279 117 241 145 242 128 262 132 282 124 288 108 269 88 247 73 226 72 213 76 208 88 190 112 151 107 119 117 84 139 61 175 57 210 65 231 79 253 65 243 46 187 49 157 82 109 115 93 146 83 202 49 231 13 181 12 142 6 95 30 50 39 12 96 0 162 23 250 68 275
+Polygon -16777216 true false 237 85 249 84 255 92 246 95
+Line -16777216 false 221 82 213 93
+Line -16777216 false 253 119 266 124
+Line -16777216 false 278 110 278 116
+Line -16777216 false 149 229 135 211
+Line -16777216 false 134 211 115 207
+Line -16777216 false 117 207 106 211
+Line -16777216 false 91 268 131 290
+Line -16777216 false 220 82 213 79
+Line -16777216 false 286 126 294 128
+Line -16777216 false 193 284 206 285
 
 star
 false
