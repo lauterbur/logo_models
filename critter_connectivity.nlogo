@@ -39,7 +39,7 @@ end
 
 to setupRabbits
   set-default-shape rabbits "rabbit"
-  ask n-of 50 patches with [pxcor < -8] [
+  ask n-of 50 patches with [pxcor < -8 and pxcor > -19] [
     sprout-rabbits 1 [
       set color orange
       set speed 1
@@ -47,7 +47,7 @@ to setupRabbits
       set bridge-angle 10
       ]
   ]
-    ask n-of 50 patches with [pxcor > 8] [
+    ask n-of 50 patches with [pxcor > 8 and pxcor < 19] [
     sprout-rabbits 1 [
       set color violet 
       set speed 1
