@@ -39,7 +39,7 @@ end
 
 to setupRabbits
   set-default-shape rabbits "rabbit"
-  ask n-of 50 patches with [pxcor < -8 and pxcor > -19 and pycor > -19 and pycor < 19] [
+  ask n-of 50 patches with [pxcor < -8 and pxcor > -19 and pycor > -18 and pycor < 18] [
     sprout-rabbits 1 [
       set color orange
       set speed 1
@@ -47,7 +47,7 @@ to setupRabbits
       set bridge-angle 10
       ]
   ]
-    ask n-of 50 patches with [pxcor > 8 and pxcor < 19 and pycor > -19 and pycor < 19] [
+    ask n-of 50 patches with [pxcor > 8 and pxcor < 19 and pycor > -18 and pycor < 18] [
     sprout-rabbits 1 [
       set color violet 
       set speed 1
@@ -114,7 +114,7 @@ to move  ;; rabbit procedure
       lt random-float angle
       fd speed
     ]
-    [ ifelse [pcolor] of patch-ahead 1 = grey
+    [ ifelse [pcolor] of patch-ahead 1 = grey of [pcolor] of patch-ahead 1 = yellow
  			[ lt random-float angle ]
       [ ifelse [pycor] of patch-ahead 1 < 2 and [pycor] of patch-ahead 1 > -2 and [pxcor] of patch-ahead 1 > -9 and [pxcor] of patch-ahead 1 < 9 
          [
