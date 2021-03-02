@@ -114,7 +114,7 @@ to move  ;; rabbit procedure
       lt random-float angle
       fd speed
     ]
-    [ ifelse [pcolor] of patch-ahead 1 = grey of [pcolor] of patch-ahead 1 = yellow
+    [ ifelse [pcolor] of patch-ahead 1 = grey or [pcolor] of patch-ahead 1 = yellow
  			[ lt random-float angle ]
       [ ifelse [pycor] of patch-ahead 1 < 2 and [pycor] of patch-ahead 1 > -2 and [pxcor] of patch-ahead 1 > -9 and [pxcor] of patch-ahead 1 < 9 
          [
