@@ -10,6 +10,7 @@ breed [butterflies butterfly]
 butterflies-own [speed
 								 angle]
 globals [bridge?]
+patches-own [road?]
 
 
 to setup
@@ -19,6 +20,7 @@ to setup
   	set pcolor grey
     if (pxcor = 1 or pxcor = -1) [set pcolor yellow]
   	if (pxcor > 8 or pxcor < -8) [set pcolor green]
+    if (pxcor > -9 and pxcor < 9) [set road? true] 
  		if bridge 
     [
       if (pycor < 2 and pycor > -2 and pxcor > -10 and pxcor < 10) [set pcolor brown]
@@ -28,9 +30,9 @@ to setup
     [
       ask n-of ( (51 * bridge_cover) / 100 ) patches with [pcolor = brown] [ set pcolor green ]
   	]
-  ifelse Critter = "rabbit" 
+  ifelse Critter = "squirrel" 
   [ setupRabbits ]
-  [ ifelse Critter = "bug"
+  [ ifelse Critter = "turtle"
     [ setupBugs ]
   	[ setupButterflies ]
   ]
@@ -38,7 +40,7 @@ to setup
 end
 
 to setupRabbits
-  set-default-shape rabbits "rabbit"
+  set-default-shape rabbits "squirrel"
   ask n-of 50 patches with [pxcor < -8 and pxcor > -19 and pycor > -18 and pycor < 18] [
     sprout-rabbits 1 [
       set color orange
@@ -58,11 +60,11 @@ to setupRabbits
 end
 
 to setupBugs
-  set-default-shape bugs "bug"
+  set-default-shape bugs "turtle"
   ask n-of 50 patches with [pxcor < -8] [
     sprout-bugs 1 [
       set color orange
-      set speed .5
+      set speed .4
       set angle 360
       set bridge-angle 10
     ]
@@ -70,7 +72,7 @@ to setupBugs
     ask n-of 50 patches with [pxcor > 8] [
     sprout-bugs 1 [
       set color violet 
-      set speed .5
+      set speed .4
       set angle 360
       set bridge-angle 10
 		]
@@ -97,38 +99,42 @@ end
 
 to go
   ask rabbits
-  [ move ]
+  [ carefully [ move ] [ print error-message] ]
   ask bugs
-  [ move ]
+  [ carefully [ move ] [ print error-message] ]
   ask butterflies
-  [ move ]
+  [ carefully [ move ] [ print error-message] ]
   tick
 end
 
 to move  ;; rabbit procedure
 
-  if not can-move? 1 [ rt angle / 2 ]
+  if not can-move? 1 [rt 180]
 
 	ifelse Critter = "butterfly"
     [ rt random-float angle
       lt random-float angle
       fd speed
     ]
-    [ ifelse ([pcolor] of patch-ahead 1 = grey or [pcolor] of patch-ahead 1 = yellow)
- 			[ lt random-float angle ]
-      [ ifelse [pycor] of patch-ahead 1 < 2 and [pycor] of patch-ahead 1 > -2 and [pxcor] of patch-ahead 1 > -9 and [pxcor] of patch-ahead 1 < 9 
-         [
-           rt random bridge-angle
-  	       lt random bridge-angle
-    	     fd speed * (bridge_cover / 100)
-   			 ]
-      	 [ 
-           rt random 10
-  				 lt random 10
-      		 fd speed
+  	[ 
+      ifelse ([pcolor] of patch-ahead 1 = grey )
+      [rt 90 + random-float 180 ]
+      	[ ifelse ([pcolor] of patch-ahead 1 = yellow)
+          [ rt 90 + random-float 180 ]
+          [ifelse road? 
+           [
+            ;; rt random-float bridge-angle
+            ;; lt random-float bridge-angle
+             fd speed * (bridge_cover / 100)
+           ]
+           [ 
+             rt random-float 10
+             lt random-float 10
+             fd speed
+           ]
          ]
-       ]
  		 ]
+]
 
 end
 
@@ -267,7 +273,7 @@ CHOOSER
 55
 Critter
 critter
-"rabbit" "bug" "butterfly"
+"squirrel" "turtle" "butterfly"
 1
 
 BUTTON
