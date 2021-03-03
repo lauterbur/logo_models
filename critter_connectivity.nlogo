@@ -28,7 +28,7 @@ to setup
   ]
   if bridge
     [
-      ask n-of ( (51 * bridge_cover) / 100 ) patches with [pcolor = brown] [ set pcolor green ]
+      ask n-of ( (51 * bridge_cover + 5) / 100 ) patches with [pcolor = brown] [ set pcolor green ]
   	]
   ifelse Critter = "squirrel" 
   [ setupRabbits ]
