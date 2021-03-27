@@ -6,10 +6,9 @@ critters-own [ shape ]
 to setup
   ca
   resize-world 0 69 0 39
-  
+  set-default-shape turtles "person student"                   
   create-critters 1
   [                 ;
-  set shape "person student"                   
   set size 1
   set xcor 35
   set ycor 20
@@ -79,7 +78,6 @@ to go_left
   [set heading 270
   turtle-move]
 end
-
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
