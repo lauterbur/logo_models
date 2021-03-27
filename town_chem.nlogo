@@ -98,6 +98,7 @@ to go  ;; forever button
    ;; set speed 1
     fd speed ]
     diffuse water-scent (1 / 100)
+  if not any? turtles [ stop ]
   tick
 end
 
