@@ -28,6 +28,7 @@ to setup
   ask patches [
     if (pxcor = 1 or pxcor = -1) [set pcolor yellow]
     if (pxcor > 8 or pxcor < -8) [set pcolor green]
+    if (pxcor > 40 and pxcor < 45 and pycor > 20 and pycor < 25) [set pcolor red]
   ]
   reset-ticks
 end
@@ -67,7 +68,34 @@ to go  ;; forever button
   ask turtles [
     look-for-water       ;; flow toward water
     wiggle
-    set speed 1
+    ifelse ([pcolor] of patch-ahead 1 = 9.9 or [pcolor] of patch-ahead 1 = 45 ) ;; goes fast on roads and parking lots
+    [set speed 1]
+    [ifelse ([pcolor] of patch-ahead 1 = 65 );; goes more slowly in natural areas 
+      [ ifelse (random-float 1 < 0.15) ;; sometimes gets absorbed in soil 
+        [ die ]
+        [ set speed 0.5 ] 
+      ]
+      [ ifelse ([pcolor] of patch-ahead 1 = 35 ) ;; in agriculture, faster than natural but slower than roads
+        [ ifelse (random-float 1 < 0.05) ;; sometimes gets absorbed by soil;; 
+          [die]
+          [ set speed 0.75 ]
+        ]
+        [ ifelse ([pcolor] of patch-ahead 1 = red) ;; set this to building colors
+          [ while [ [pcolor] of patch-ahead 1 = red]
+           [ ifelse ( (random 2) = 0 )
+            [ rt 10 ]
+            [ lt 10 ]
+            ]
+          ]
+          [set speed 1]
+        ]
+          ;;set heading round ( (heading / 90) * 90 ) ;; can't go through building, most go around
+      ;;    set speed 1
+       ;; ]
+      ;;  [ set speed 1 ]
+      ]
+    ]
+   ;; set speed 1
     fd speed ]
     diffuse water-scent (1 / 100)
   tick
