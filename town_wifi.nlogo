@@ -50,8 +50,7 @@ end
 
 ;; make turtle move with buttons/keys
 to turtle-move
-  if [pcolor] of patch-ahead 1 = yellow or [pcolor] of patch-ahead 1 = grey    ;if there is opening, then pet can move forward
-    [fd 1]
+  fd 1
  ;;   wait speed                               ;control the speed of pet
 end
 
@@ -80,6 +79,7 @@ to go_left
   [set heading 270
   turtle-move]
 end
+
 @#$#@#$#@
 GRAPHICS-WINDOW
 210
@@ -419,7 +419,7 @@ Polygon -7500403 true true 105 90 120 195 90 285 105 300 135 300 150 225 165 300
 Rectangle -7500403 true true 127 79 172 94
 Polygon -7500403 true true 195 90 240 150 225 180 165 105
 Polygon -7500403 true true 105 90 60 150 75 180 135 105
-             
+
 person student
 false
 0
