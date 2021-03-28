@@ -16,8 +16,7 @@ patches-own
   nitrate
   phosphate
   oxygen
-  lead
-  quality
+  mercury
 ]
 
 to setup
@@ -167,7 +166,7 @@ to sample
       set nitrate 800
       set phosphate 800
       set oxygen 4
-      set lead 10
+      set mercury 10
     ]
   ]]
     [output-print "You need to choose a sampling location before you can sample"]
@@ -177,6 +176,30 @@ end
 to-report acidity
   let ps "not sampled"
   ask turtles with [color = black ] [ set ps [ph] of patch-here ]
+  report ps
+end
+
+to-report do
+  let ps "not sampled"
+  ask turtles with [color = black ] [ set ps [do] of patch-here ]
+  report ps
+end
+
+to-report ni
+  let ps "not sampled"
+  ask turtles with [color = black ] [ set ps [ni] of patch-here ]
+  report ps
+end
+
+to-report me
+  let ps "not sampled"
+  ask turtles with [color = black ] [ set ps [me] of patch-here ]
+  report ps
+end
+
+to-report phos
+  let ps "not sampled"
+  ask turtles with [color = black ] [ set ps [phos] of patch-here ]
   report ps
 end
 
@@ -251,10 +274,10 @@ ticks
 30
 
 BUTTON
-20
-15
-100
-75
+8
+12
+203
+43
 NIL
 setup
 NIL
@@ -268,10 +291,10 @@ NIL
 1
 
 BUTTON
-20
-105
-100
-165
+10
+48
+200
+95
 NIL
 rain
 T
@@ -285,10 +308,10 @@ NIL
 1
 
 BUTTON
-25
-270
-205
-330
+69
+152
+144
+204
 NIL
 up
 NIL
@@ -303,9 +326,9 @@ NIL
 
 BUTTON
 15
-355
+266
 195
-415
+326
 NIL
 sample
 NIL
@@ -319,10 +342,10 @@ NIL
 1
 
 BUTTON
-20
-435
+10
+100
 200
-495
+148
 NIL
 choose-sampling-location
 NIL
@@ -336,22 +359,117 @@ NIL
 1
 
 MONITOR
-35
-200
-105
-245
-NIL
+15
+330
+70
+375
+pH
 acidity
 1
 1
 11
 
 OUTPUT
-152
-133
-332
-193
+5
+475
+210
+523
 12
+
+BUTTON
+69
+209
+144
+262
+NIL
+down
+NIL
+1
+T
+OBSERVER
+NIL
+V
+NIL
+NIL
+1
+
+BUTTON
+149
+181
+206
+236
+right
+go_right
+NIL
+1
+T
+OBSERVER
+NIL
+G
+NIL
+NIL
+1
+
+BUTTON
+10
+182
+63
+234
+left
+go_left
+NIL
+1
+T
+OBSERVER
+NIL
+F
+NIL
+NIL
+1
+
+MONITOR
+13
+378
+99
+423
+nitrate (ppm)
+ni
+0
+1
+11
+
+MONITOR
+95
+330
+195
+375
+phosphate (ppb)
+phos
+0
+1
+11
+
+MONITOR
+30
+426
+177
+471
+dissolved oxygen (mg/L)
+do
+1
+1
+11
+
+MONITOR
+100
+378
+195
+423
+mercury (mg/L)
+me
+6
+1
+11
 @#$#@#$#@
 ## WHAT IS IT?
 
