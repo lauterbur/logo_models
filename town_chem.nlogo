@@ -1,12 +1,23 @@
+breed [meters meter]
+globals [rained?]
 turtles-own
 [
 speed
 ]
 
+meters-own
+[ loc ]
+
 patches-own
 [
   water? ;; true on stream, false elsewhere
   water-scent ;; number that is higher closer to water
+  ph
+  nitrate
+  phosphate
+  oxygen
+  lead
+  quality
 ]
 
 to setup
@@ -29,6 +40,7 @@ to setup
     if (pxcor = 1 or pxcor = -1) [set pcolor yellow]
     if (pxcor > 8 or pxcor < -8) [set pcolor green]
     if (pxcor > 40 and pxcor < 45 and pycor > 20 and pycor < 25) [set pcolor red]
+    set ph "not sampled"
   ]
   reset-ticks
 end
@@ -64,7 +76,7 @@ to recolor-patch
 end
 
 ;; procedures ;;
-to go  ;; forever button
+to rain  ;; forever button
   ask turtles [
     look-for-water       ;; flow toward water
     wiggle
@@ -99,6 +111,7 @@ to go  ;; forever button
     fd speed ]
     diffuse water-scent (1 / 100)
   if not any? turtles [ stop ]
+  set rained? TRUE
   tick
 end
 
@@ -132,28 +145,82 @@ to-report water-scent-at-angle [angle]
   report [water-scent] of p
 end
 
-;;to recolor-patch  ;; patch procedure
-  ;; give color to nest and food sources
- ;; ifelse water?
- ;; [ set pcolor violet ]
- ;; [ ifelse food > 0
- ;;   [ if food-source-number = 1 [ set pcolor cyan ]
- ;;     if food-source-number = 2 [ set pcolor sky  ]
- ;;     if food-source-number = 3 [ set pcolor blue ] ]
- ;;   ;; scale color to show chemical concentration
- ;;   [ set pcolor scale-color green chemical 0.1 5 ] ]
-;;end
+to choose-sampling-location
+  ifelse rained?
+	[  ask one-of patches with [pcolor = blue ] 	
+  	[
+    	sprout-meters 1 [
+      	    set color white
+        	  set shape "circle"
+    	]
+    ]
+  ]
+    [output-print "It needs to rain before you can sample"]
+end
+
+to sample
+  ifelse rained?
+  [  ask turtles with [color = white]
+  [ set color black
+    ask patch-here [
+      set ph 7
+      set nitrate 800
+      set phosphate 800
+      set oxygen 4
+      set lead 10
+    ]
+  ]]
+    [output-print "You need to choose a sampling location before you can sample"]
+
+end
+
+to-report acidity
+  let ps "not sampled"
+  ask turtles with [color = black ] [ set ps [ph] of patch-here ]
+  report ps
+end
 
 
+;; move sampling meter
+;; make turtle move with buttons/keys
+to turtle-move
+  fd 1
+ ;;   wait speed                               ;control the speed of pet
+end
 
-;; output current wifi strength
-;;to-report signal-level 
- ;; let ps "none"
- ;; ask turtles [ set ps [signal] of patch-here ]
- ;; report ps
- ;; report [signal] of patch-here
-;;end 
+;directions!  
+to up
+  ask meters
+  [set heading 0
+   if ([pcolor] of patch-ahead 1 = blue )
+  		[turtle-move]
+  ]
+ end
 
+to down
+  ask meters
+  [set heading 0
+   if ([pcolor] of patch-ahead 1 = blue )
+  		[turtle-move]
+  ]
+end
+
+to go_right
+  ask meters
+  [set heading 0
+   if ([pcolor] of patch-ahead 1 = blue )
+  		[turtle-move]
+  ]
+ 
+end
+
+to go_left
+  ask meters
+  [set heading 0
+   if ([pcolor] of patch-ahead 1 = blue )
+  		[turtle-move]
+  ]
+end
 
 @#$#@#$#@
 GRAPHICS-WINDOW
@@ -200,24 +267,13 @@ NIL
 NIL
 1
 
-MONITOR
-6
-305
-116
-368
-wifi signal
-signal-level
-0
-1
-20
-
 BUTTON
 20
 105
 100
 165
 NIL
-go
+rain
 T
 1
 T
@@ -227,6 +283,75 @@ NIL
 NIL
 NIL
 1
+
+BUTTON
+25
+270
+205
+330
+NIL
+up
+NIL
+1
+T
+TURTLE
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+15
+355
+195
+415
+NIL
+sample
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+BUTTON
+20
+435
+200
+495
+NIL
+choose-sampling-location
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+MONITOR
+35
+200
+105
+245
+NIL
+acidity
+1
+1
+11
+
+OUTPUT
+152
+133
+332
+193
+12
 @#$#@#$#@
 ## WHAT IS IT?
 
