@@ -34,7 +34,6 @@ to setup
    ;; ])
   ]
   setup-patches
-  setup-rain
   reset-ticks
 end
 
@@ -73,6 +72,8 @@ end
 
 ;; procedures ;;
 to rain  ;; forever button
+  if ticks < 50 [setup-rain]
+
   ask turtles [
     look-for-water       ;; flow toward water
     wiggle
@@ -91,8 +92,8 @@ to rain  ;; forever button
         [ ifelse ([pcolor] of patch-ahead 1 = red) ;; set this to building colors
           [ while [ [pcolor] of patch-ahead 1 = red]
            [ ifelse ( (random 2) = 0 )
-            [ rt 10 ]
-            [ lt 10 ]
+            [ rt 40 ]
+            [ lt 40 ]
             ]
           ]
           [set speed 1]
@@ -107,6 +108,7 @@ to rain  ;; forever button
     fd speed ]
     diffuse water-scent (1 / 100)
   if not any? turtles [ stop ]
+  if ticks = 100 [stop]
   set rained? TRUE
   tick
 end
@@ -316,7 +318,7 @@ NIL
 T
 TURTLE
 NIL
-NIL
+T
 NIL
 NIL
 1
