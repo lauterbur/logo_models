@@ -33,14 +33,8 @@ to setup
     ;;    [a b c] -> ask patch (a - 1) (b - 1) [set pcolor c]
    ;; ])
   ]
-  setup-rain
   setup-patches
-  ask patches [
-    if (pxcor = 1 or pxcor = -1) [set pcolor yellow]
-    if (pxcor > 8 or pxcor < -8) [set pcolor green]
-    if (pxcor > 40 and pxcor < 45 and pycor > 20 and pycor < 25) [set pcolor red]
-    set ph "not sampled"
-  ]
+  setup-rain
   reset-ticks
 end
 
@@ -49,11 +43,14 @@ to setup-patches
   [
     setup-water
     recolor-patch
+    if (pxcor = 1 or pxcor = -1) [set pcolor yellow]
+    if (pxcor > 8 or pxcor < -8) [set pcolor green]
+    if (pxcor > 40 and pxcor < 45 and pycor > 20 and pycor < 25) [set pcolor red]
    ]
 end
 
 to setup-rain
-    ask n-of 300 patches [
+  ask n-of 300 patches with [pcolor != red] [ ;; don't land in places they can't go around
     sprout 1 [
       set color blue
       set size .4
@@ -214,7 +211,7 @@ end
 ;directions!  
 to up
   ask meters
-  [set heading 0
+  [set heading 360
    if ([pcolor] of patch-ahead 1 = blue )
   		[turtle-move]
   ]
@@ -222,7 +219,7 @@ to up
 
 to down
   ask meters
-  [set heading 0
+  [set heading 180
    if ([pcolor] of patch-ahead 1 = blue )
   		[turtle-move]
   ]
@@ -230,7 +227,7 @@ end
 
 to go_right
   ask meters
-  [set heading 0
+  [set heading 90
    if ([pcolor] of patch-ahead 1 = blue )
   		[turtle-move]
   ]
@@ -239,7 +236,7 @@ end
 
 to go_left
   ask meters
-  [set heading 0
+  [set heading 270
    if ([pcolor] of patch-ahead 1 = blue )
   		[turtle-move]
   ]
