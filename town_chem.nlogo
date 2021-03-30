@@ -106,8 +106,8 @@ to rain  ;; forever button
               [ rt 40 ]
               [ lt 40 ]
             ]]
-            [ ifelse([pxcor] of patch-ahead 1 >= 38 and [pxcor] of patch-ahead 1 <= 40 and [pycor] of patch-ahead 1 >= 8 and [pycor] of patch-ahead 1 <= 10)
-            	[ while [[pxcor] of patch-ahead 1 >= 38 and [pxcor] of patch-ahead 1 <= 40 and [pycor] of patch-ahead 1 >= 8 and [pycor] of patch-ahead 1 <= 10]
+            [ ifelse([pxcor] of patch-ahead 1 >= 38 and [pxcor] of patch-ahead 1 <= 40 and [pycor] of patch-ahead 1 >= 31 and [pycor] of patch-ahead 1 <= 29)
+            	[ while [[pxcor] of patch-ahead 1 >= 38 and [pxcor] of patch-ahead 1 <= 40 and [pycor] of patch-ahead 1 >= 31 and [pycor] of patch-ahead 1 <= 29]
                [ ifelse ( (random 2) = 0 )
                 [ rt 40 ]
                 [ lt 40 ]
@@ -172,6 +172,7 @@ to-report water-scent-at-angle [angle]
 end
 
 to choose-sampling-location
+  ask meters with [color = white] [die]
   ifelse rained?
 	[  ask one-of patches with [pcolor = 95 ] 	
   	[
@@ -187,16 +188,33 @@ end
 to sample
   ifelse rained?
   [  ask turtles with [color = white]
-  [ set color black
-    ask patch-here [
-      set ph 7
-      set nitrate 800
-      set phosphate 800
-      set oxygen 4
-      set mercury 10
+  	[ 
+    set color black
+    ask patch-here 
+      [ ifelse (pcolor = 95 )
+        [ ifelse (pycor < 11 or pycor < 21 and pxcor > 34) ;; landfill influence
+          [
+            set ph precision ( 7 + random-float 1 ) 1
+            set nitrate 800
+            set phosphate 800
+            set oxygen 4
+            set mercury 10
+          ]
+          [
+            set ph "none"
+            set nitrate "none"
+            set phosphate "none"
+            set oxygen "none"
+            set mercury "none"
+          ]
+        ]
+        [
+          output-print "Hey, that's not the river. Make sure your sampling cup is in the river first."
+        ]
+      ]
     ]
-  ]]
-    [output-print "You need to choose a sampling location before you can sample"]
+  ]
+  [output-print "You need to choose a sampling location before you can sample"]
 
 end
 
@@ -235,31 +253,33 @@ end
 ;; make turtle move with buttons/keys
 to turtle-move
   fd 1
- ;;   wait speed                               ;control the speed of pet
 end
 
 ;directions!  
 to up
   ask meters
   [set heading 360
-    if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 )
-  		[turtle-move]
+  ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
+  ;;		[turtle-move]
+    turtle-move
   ]
  end
 
 to down
   ask meters
   [set heading 180
-    if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 )
-  		[turtle-move]
+  ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
+  ;;		[turtle-move]
+    turtle-move
   ]
 end
 
 to go_right
   ask meters
   [set heading 90
-    if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 )
-  		[turtle-move]
+  ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
+  ;;		[turtle-move]
+    turtle-move
   ]
  
 end
@@ -267,8 +287,9 @@ end
 to go_left
   ask meters
   [set heading 270
-    if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 )
-  		[turtle-move]
+  ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
+  ;;		[turtle-move]
+    turtle-move
   ]
 end
 
