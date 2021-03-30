@@ -50,7 +50,7 @@ to setup-patches
 end
 
 to setup-rain
-  ask n-of 300 patches with [pcolor != red] [ ;; don't land in places they can't go around
+  ask n-of 3 patches with [pcolor != 15 or pcolor != 103 or pxcor <= 38 or pxcor >= 40 or pycor <= 8 or pycor >= 10] [ ;; don't land in places they can't go over
     sprout 1 [
       set color blue
       set size .4
@@ -63,16 +63,11 @@ to setup-water  ;; patch procedure
   ask patches
   [
     if (pcolor = 95) [set water? TRUE]
-  ]
+  
  ;; set water? (distancexy 0 0) < 10
   ;; spread a water-scent over the whole world -- stronger near the water
   ;; set water-scent 200 - distancexy 0 0
-end
-
-to recolor-patch
-    ifelse water?
-    [ set pcolor blue ]
-    [ set pcolor grey ]
+  ]
 end
 
 ;; procedures ;;
@@ -84,36 +79,60 @@ to rain  ;; forever button
     wiggle
     ifelse ([pcolor] of patch-ahead 1 = 9.9 or [pcolor] of patch-ahead 1 = 45 ) ;; goes fast on roads and parking lots
     [set speed 1]
-    [ifelse ([pcolor] of patch-ahead 1 = 65 );; goes more slowly in natural areas 
+    [ifelse ([pcolor] of patch-ahead 1 = 63 );; goes more slowly in natural areas 
       [ ifelse (random-float 1 < 0.15) ;; sometimes gets absorbed in soil 
         [ die ]
         [ set speed 0.5 ] 
       ]
-      [ ifelse ([pcolor] of patch-ahead 1 = 35 ) ;; in agriculture, faster than natural but slower than roads
-        [ ifelse (random-float 1 < 0.05) ;; sometimes gets absorbed by soil;; 
+      [ ifelse ([pcolor] of patch-ahead 1 = 34 ) ;; in agriculture, faster than natural but slower than roads
+        [ ifelse (random-float 1 < 0.1) ;; sometimes gets absorbed by soil;; 
           [die]
           [ set speed 0.75 ]
         ]
-        [ ifelse ([pcolor] of patch-ahead 1 = red) ;; set this to building colors
-          [ while [ [pcolor] of patch-ahead 1 = red]
+        [ifelse ([pcolor] of patch-ahead 1 = 38 ) ;; in light ag/residential, faster than ag, slower than roads, small chance of absorption
+          [ifelse (random-float 1 < 0.05)
+            [die]
+            [set speed 0.9]
+          ]
+        [ ifelse ([pcolor] of patch-ahead 1 = 15) ;; set this to building colors
+          [ while [ [pcolor] of patch-ahead 1 = 15 ] 
            [ ifelse ( (random 2) = 0 )
             [ rt 40 ]
             [ lt 40 ]
-            ]
+          ]]
+       	  [ ifelse([pcolor] of patch-ahead 1 = 103)
+            [ while [ [pcolor] of patch-ahead 1 = 103] 
+             [ ifelse ( (random 2) = 0 )
+              [ rt 40 ]
+              [ lt 40 ]
+            ]]
+            [ ifelse([pxcor] of patch-ahead 1 >= 38 and [pxcor] of patch-ahead 1 <= 40 and [pycor] of patch-ahead 1 >= 8 and [pycor] of patch-ahead 1 <= 10)
+            	[ while [[pxcor] of patch-ahead 1 >= 38 and [pxcor] of patch-ahead 1 <= 40 and [pycor] of patch-ahead 1 >= 8 and [pycor] of patch-ahead 1 <= 10]
+               [ ifelse ( (random 2) = 0 )
+                [ rt 40 ]
+                [ lt 40 ]
+              ]]
+		           [set speed 1]
+        		]
           ]
-          [set speed 1]
         ]
+      ]
+    ]
+  ]
+        
           ;;set heading round ( (heading / 90) * 90 ) ;; can't go through building, most go around
       ;;    set speed 1
        ;; ]
       ;;  [ set speed 1 ]
-      ]
-    ]
    ;; set speed 1
     fd speed ]
     diffuse water-scent (1 / 100)
-  if not any? turtles [ stop ]
-  if ticks = 100 [stop]
+  if not any? turtles [
+  reset-ticks
+  stop]
+  if ticks = 100 [
+  reset-ticks 
+  stop]
   set rained? TRUE
   tick
 end
@@ -121,9 +140,13 @@ end
 to look-for-water  ;; turtle procedure
   ifelse water?
   [die]
-  [uphill-water-scent]
-  if (water-scent >= 0.05) and (water-scent < 2)
-  [ uphill-water-scent ]
+  [ let target-patch min-one-of (patches in-radius 25 with [pcolor = 95]) [distance myself]
+    if target-patch != nobody  [
+    set heading towards target-patch ]
+  ]
+;;  [uphill-water-scent]
+ ;; if (water-scent >= 0.05) ;;and (water-scent < 2)
+  ;;[ uphill-water-scent ]
 end
 
 to uphill-water-scent  ;; turtle procedure
@@ -150,7 +173,7 @@ end
 
 to choose-sampling-location
   ifelse rained?
-	[  ask one-of patches with [pcolor = blue ] 	
+	[  ask one-of patches with [pcolor = 95 ] 	
   	[
     	sprout-meters 1 [
       	    set color white
@@ -219,7 +242,7 @@ end
 to up
   ask meters
   [set heading 360
-   if ([pcolor] of patch-ahead 1 = blue )
+    if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 )
   		[turtle-move]
   ]
  end
@@ -227,7 +250,7 @@ to up
 to down
   ask meters
   [set heading 180
-   if ([pcolor] of patch-ahead 1 = blue )
+    if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 )
   		[turtle-move]
   ]
 end
@@ -235,7 +258,7 @@ end
 to go_right
   ask meters
   [set heading 90
-   if ([pcolor] of patch-ahead 1 = blue )
+    if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 )
   		[turtle-move]
   ]
  
@@ -244,7 +267,7 @@ end
 to go_left
   ask meters
   [set heading 270
-   if ([pcolor] of patch-ahead 1 = blue )
+    if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 )
   		[turtle-move]
   ]
 end
