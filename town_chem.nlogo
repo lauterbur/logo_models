@@ -220,31 +220,31 @@ end
 
 to-report acidity
   let ps "not sampled"
-  ask turtles with [color = black ] [ set ps [ph] of patch-here ]
+  ask meters with [color = black ] [ set ps [ph] of patch-here ]
   report ps
 end
 
 to-report do
   let ps "not sampled"
-  ask turtles with [color = black ] [ set ps [do] of patch-here ]
+  ask meters with [color = black ] [ set ps [do] of patch-here ]
   report ps
 end
 
 to-report ni
   let ps "not sampled"
-  ask turtles with [color = black ] [ set ps [ni] of patch-here ]
+  ask meters with [color = black ] [ set ps [ni] of patch-here ]
   report ps
 end
 
 to-report me
   let ps "not sampled"
-  ask turtles with [color = black ] [ set ps [me] of patch-here ]
+  ask meters with [color = black ] [ set ps [me] of patch-here ]
   report ps
 end
 
 to-report phos
   let ps "not sampled"
-  ask turtles with [color = black ] [ set ps [phos] of patch-here ]
+  ask meters with [color = black ] [ set ps [phos] of patch-here ]
   report ps
 end
 
@@ -257,7 +257,7 @@ end
 
 ;directions!  
 to up
-  ask meters
+  ask meters with [color = white]
   [set heading 360
   ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
   ;;		[turtle-move]
@@ -266,7 +266,7 @@ to up
  end
 
 to down
-  ask meters
+  ask meters with [color = white]
   [set heading 180
   ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
   ;;		[turtle-move]
@@ -275,7 +275,7 @@ to down
 end
 
 to go_right
-  ask meters
+  ask meters with [color = white]
   [set heading 90
   ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
   ;;		[turtle-move]
@@ -285,7 +285,7 @@ to go_right
 end
 
 to go_left
-  ask meters
+  ask meters with [color = white]
   [set heading 270
   ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
   ;;		[turtle-move]
