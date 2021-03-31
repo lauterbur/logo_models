@@ -225,31 +225,32 @@ signal-level
 @#$#@#$#@
 ## WHAT IS IT?
 
-(a general understanding of what the model is trying to show or explain)
+This model allows you to explore a town with a particular set of internat/wifi technology and installation design.
+<explain the tech set and design here>
 
 ## HOW IT WORKS
 
-(what rules the agents use to create the overall behavior of the model)
+The model records the wifi signal available at any point in town, when the person is at that point.
 
 ## HOW TO USE IT
 
-(how to use the model, including a description of each of the items in the Interface tab)
+Click the `install` button to set up the technology. You may need to wait a few moments (construction always takes longer than we hope).
+
+You will start in the center of the map, look for your avatar on the smaller, white east-west road in the center.
+
+Then use the buttons on the left, or the T (up), V (down), F (left), and G (right) keys on the keyboard to move around. Watch the `wifi signal` report in the bottom left to see how strong your signal is. 5 is high, 1 is low, and 0 is nonexistant.
+
+Roads are white, with the highway in yellow. Light green is residential, dark green is the downtown. 
+Purple is the college, and the two red buildings are the high school and middle school. 
+The white square with red + is the hospital. Light blue is an office park, and the adjacent darker blue is a Federal Aviation Administration signalling office.
+The black `A` is a radio tower, and the navy square in the bottom left is a water tower. 
+Brown is agriculture (bottom left) and the wastewater treatment plant (middle right).
 
 ## THINGS TO NOTICE
 
-(suggested things for the user to notice while running the model)
-
-## THINGS TO TRY
-
-(suggested things for the user to try to do (move sliders, switches, etc.) with the model)
-
-## EXTENDING THE MODEL
-
-(suggested things to add or change in the Code tab to make the model more complicated, detailed, accurate, etc.)
-
-## NETLOGO FEATURES
-
-(interesting or unusual features of NetLogo that the model uses, particularly in the Code tab; or where workarounds were needed for missing features)
+As you move around town, pay attention to how certain buildings might affect the wifi signal (eg. the radio tower).
+Wifi emitters are orange - single squares are 360 degree emitting, but with a limited range. `L` shaped sets of three orange squares are directed emitters with a longer range.
+Internet cables are bright pink.
 
 ## RELATED MODELS
 
@@ -257,7 +258,8 @@ signal-level
 
 ## CREDITS AND REFERENCES
 
-(a reference to the model's URL on the web if it has one, as well as any other necessary credits, citations, and links)
+M. Elise Lauterbur
+
 @#$#@#$#@
 default
 true
