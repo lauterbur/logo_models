@@ -222,7 +222,7 @@ signal-level
 0
 1
 20
-;; the what/hows and shapes
+@#$#@#$#@
 @#$#@#$#@
 ## WHAT IS IT?
 
@@ -260,12 +260,26 @@ Internet cables are bright pink.
 ## CREDITS AND REFERENCES
 
 M. Elise Lauterbur
-
 @#$#@#$#@
 default
 true
 0
 Polygon -7500403 true true 150 5 40 250 150 205 260 250
+
+person student
+false
+0
+Polygon -13791810 true false 135 90 150 105 135 165 150 180 165 165 150 105 165 90
+Polygon -7500403 true true 195 90 240 195 210 210 165 105
+Circle -7500403 true true 110 5 80
+Rectangle -7500403 true true 127 79 172 94
+Polygon -7500403 true true 105 90 120 195 90 285 105 300 135 300 150 225 165 300 195 300 210 285 180 195 195 90
+Polygon -1 true false 100 210 130 225 145 165 85 135 63 189
+Polygon -13791810 true false 90 210 120 225 135 165 67 130 53 189
+Polygon -1 true false 120 224 131 225 124 210
+Line -16777216 false 139 168 126 225
+Line -16777216 false 140 167 76 136
+Polygon -7500403 true true 105 90 60 195 90 210 135 105
 
 airplane
 true
@@ -442,21 +456,6 @@ Rectangle -7500403 true true 127 79 172 94
 Polygon -7500403 true true 195 90 240 150 225 180 165 105
 Polygon -7500403 true true 105 90 60 150 75 180 135 105
 
-person student
-false
-0
-Polygon -13791810 true false 135 90 150 105 135 165 150 180 165 165 150 105 165 90
-Polygon -7500403 true true 195 90 240 195 210 210 165 105
-Circle -7500403 true true 110 5 80
-Rectangle -7500403 true true 127 79 172 94
-Polygon -7500403 true true 105 90 120 195 90 285 105 300 135 300 150 225 165 300 195 300 210 285 180 195 195 90
-Polygon -1 true false 100 210 130 225 145 165 85 135 63 189
-Polygon -13791810 true false 90 210 120 225 135 165 67 130 53 189
-Polygon -1 true false 120 224 131 225 124 210
-Line -16777216 false 139 168 126 225
-Line -16777216 false 140 167 76 136
-Polygon -7500403 true true 105 90 60 195 90 210 135 105
-
 plant
 false
 0
@@ -601,4 +600,3 @@ Line -7500403 true 150 150 210 180
 @#$#@#$#@
 
 @#$#@#$#@
-
