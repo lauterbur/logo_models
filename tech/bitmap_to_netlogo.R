@@ -38,7 +38,7 @@ for (name in names(maps)) {
   usr <- par("usr")
   rasterImage(m, usr[1], usr[3], usr[2], usr[4])
   
-  dict<-setNames(c(7,9.9,115,155,55,125,95,87,1,25,33,63,25,103),unique(m))
+  dict<-setNames(c(7,9.9,115,125,25,15,95,87,1,33,45,63,25,103),unique(m))
   dict
   m_matrix<-matrix(unname(dict[as.vector(m)]), nrow=nrow(m),byrow=TRUE)
   m_matrix
