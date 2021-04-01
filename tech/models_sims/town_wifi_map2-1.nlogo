@@ -132,7 +132,7 @@ BUTTON
 15
 100
 75
-NIL
+install
 setup
 NIL
 1
