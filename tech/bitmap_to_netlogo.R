@@ -2,7 +2,7 @@ library(tidyverse)
 library(bmp)
 library(pixmap)
 
-b <- read.bmp("/home/lauterbur/Desktop/TownTechMap_Base.bmp")
+b <- read.bmp("/home/lauterbur/Desktop/AAUW_project/tech/TownTechMap_Base.bmp")
 b
 m<-as.raster(b,max=255L)
 m
@@ -38,7 +38,7 @@ for (name in names(maps)) {
   usr <- par("usr")
   rasterImage(m, usr[1], usr[3], usr[2], usr[4])
   
-  dict<-setNames(c(7,9.9,115,65,25,15,95,85,1,45,63,33,125,105),unique(m))
+  dict<-setNames(c(7,9.9,115,55,25,15,125,95,85,1,45,63,33,105),unique(m))
   dict
   m_matrix<-matrix(unname(dict[as.vector(m)]), nrow=nrow(m),byrow=TRUE)
   m_matrix
