@@ -153,10 +153,10 @@ NIL
 up
 NIL
 1
-W
+T
 TURTLE
 NIL
-T
+W
 NIL
 NIL
 1
