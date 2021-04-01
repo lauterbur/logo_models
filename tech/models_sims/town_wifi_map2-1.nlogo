@@ -1,4 +1,5 @@
 breed [ planes plane ]
+breed [ critters critter ]
 
 critters-own [ shape ]
  patches-own [ signal ]
