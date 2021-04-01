@@ -30,6 +30,9 @@ maps
 names(maps)<-files[which(!grepl("sig",files))]
 maps
 
+hex<-c( "#C3C3C3","#FFFFFF","#A349A4","#B5E61D","#ED1C24","#00A2E8","#99D9EA","#000000","#FFF200","#22B14C","#880015","#3F48CC",
+        "#FF7F27","#D952FS","#DA51F7","#DE51F7","#D952F5","#DC53F4","#DD52F5")
+dict<-setNames(c(7,9.9,115,55,15,95,85,1,45,63,33,105,25,45,45,45,45,45,45),hex)
 for (name in names(maps)) {
   #  print(i)
   b<-maps[[name]]
@@ -38,7 +41,6 @@ for (name in names(maps)) {
   usr <- par("usr")
   rasterImage(m, usr[1], usr[3], usr[2], usr[4])
   
-  dict<-setNames(c(7,9.9,115,55,25,15,125,95,85,1,45,63,33,105),unique(m))
   dict
   m_matrix<-matrix(unname(dict[as.vector(m)]), nrow=nrow(m),byrow=TRUE)
   m_matrix
