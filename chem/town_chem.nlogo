@@ -196,42 +196,42 @@ to sample
       [ ifelse (pcolor = 95 )
         [ ifelse (pycor < 11 or pycor < 21 and pxcor > 34) ;; landfill influence
           [
-            set ph precision ( 7 + random-float 1 ) 1
-            set nitrate 800 + random 10
-            set phosphate 800 + random 10
+            set ph precision ( 5.5 + random-float 0.5 ) 1
+            set nitrate precision 50 + random 5
+            set phosphate 50 + random 5
             set oxygen precision ( 4 + random-float 1 ) 1
             set mercury precision ( 0.0005 + random-float 0.00005 ) 5
           ]
-	  [ ifelse (pxcor > 37 or pxcor < 43 and pycor > 23) ;;
+	  [ ifelse (pxcor > 37 or pxcor < 43 and pycor > 23) ;; wastewater treament plant
 	    [
               set ph precision ( 7 + random-float 0.3 ) 1
-              set nitrate precision ( 0.2 + random-float 0.05 ) 2
-              set phosphate 20 + random 5
-              set oxygen precision ( 10 + random-float 2 ) 1
+              set nitrate 35 + random 5
+              set phosphate 100 + random 10
+              set oxygen precision ( 6 + random-float 1 ) 1
               set mercury precision ( 0.00003 + random-float 0.000005 ) 6
 	    ]
             [ ifelse ([pcolor] of patch-at-heading-and-distance -180 1 = 9.9 or [pcolor] of patch-at-heading-and-distance -180 1 = 45) ;; road influence
   	      [
   	        set ph precision ( 7 + random-float 1 ) 1
-                set nitrate 800 + random 10
-                set phosphate 800 + random 10
-                set oxygen precision ( 4 + random-float 1 ) 1
+                set nitrate ( 2 + random-float 1 ) 1
+                set phosphate 20 + random 10
+                set oxygen precision ( 8 + random-float 1 ) 1
                 set mercury precision ( 0.00003 + random-float 0.000005 ) 6
 	      ]
 	      [ ifelse ([pcolor] of patch-at-heading-and-distance -180 1 = 33) ;; agriculture
 	        [
 		  set ph precision ( 7 + random-float 0.3 ) 1
-                  set nitrate precision ( 0.2 + random-float 0.05 ) 2
-                  set phosphate 20 + random 5
-                  set oxygen precision ( 10 + random-float 2 ) 1
+                  set nitrate 60 + random 5
+                  set phosphate 100 + random 10
+                  set oxygen precision ( 5 + random-float 2 ) 1
                   set mercury precision ( 0.00002 + random-float 0.000005 ) 6
 	        ]
 		  [ ifelse ([pcolor] of patch-at-heading-and-distance -180 1 = 38) ;; agriculture/residential
 		    [
 		      set ph precision ( 7 + random-float 0.3 ) 1
-                      set nitrate precision ( 0.2 + random-float 0.05 ) 2
-                      set phosphate 20 + random 5
-                      set oxygen precision ( 10 + random-float 2 ) 1
+                      set nitrate 50 + random 5
+                      set phosphate 60 + random 5
+                      set oxygen precision ( 7 + random-float 2 ) 1
                       set mercury precision ( 0.00002 + random-float 0.000005 ) 6
 	            ]
   	            [ ;; background
