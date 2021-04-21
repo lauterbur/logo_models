@@ -233,6 +233,8 @@ to sample
                   set oxygen precision ( 10 + random-float 2 ) 1
                   set mercury precision ( 0.00002 + random-float 0.000005 ) 6
 	        ]
+	      ]
+	    ]
           ]
         ]
         [
