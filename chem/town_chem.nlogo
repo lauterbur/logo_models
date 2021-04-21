@@ -237,7 +237,6 @@ to sample
 	      ]
 	    ]
           ]
-        ]
         [
           output-print "Hey, that's not the river. Make sure your sampling cup is in the river first."
         ]
