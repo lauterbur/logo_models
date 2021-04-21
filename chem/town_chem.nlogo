@@ -188,8 +188,9 @@ end
 to sample
   ifelse rained?
   [  ask turtles with [color = white]
-  	[ 
+    [ 
     set color black
+    set heading 45
     ask patch-here 
       [ ifelse (pcolor = 95 )
         [ ifelse (pycor < 11 or pycor < 21 and pxcor > 34) ;; landfill influence
@@ -200,12 +201,21 @@ to sample
             set oxygen precision ( 4 + random-float 1 ) 1
             set mercury 10 + random 1
           ]
-          [
-            set ph "none"
-            set nitrate "none"
-            set phosphate "none"
-            set oxygen "none"
-            set mercury "none"
+          [ ifelse ([pcolor] of patch-at-heading-and-distance -180 1 = 9.9 or [pcolor] of patch-at-heading-and-distance -180 1 = 45)
+	    [
+	      set ph precision ( 7 + random-float 1 ) 1
+              set nitrate 800 + random 10
+              set phosphate 800 + random 10
+              set oxygen precision ( 4 + random-float 1 ) 1
+              set mercury 10 + random 1
+	    ]
+	    [
+              set ph "none"
+              set nitrate "none"
+              set phosphate "none"
+              set oxygen "none"
+              set mercury "none"
+	    ]
           ]
         ]
         [
