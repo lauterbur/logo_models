@@ -173,6 +173,7 @@ end
 
 to choose-sampling-location
   ask meters with [color = white] [die]
+  ask meters with [color = black] [die]
   ifelse rained?
 	[  ask one-of patches with [pcolor = 95 ] 	
   	[
