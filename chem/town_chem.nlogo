@@ -195,10 +195,10 @@ to sample
         [ ifelse (pycor < 11 or pycor < 21 and pxcor > 34) ;; landfill influence
           [
             set ph precision ( 7 + random-float 1 ) 1
-            set nitrate 800
-            set phosphate 800
-            set oxygen 4
-            set mercury 10
+            set nitrate 800 + random 10
+            set phosphate 800 + random 10
+            set oxygen precision ( 4 + random-float 1 ) 1
+            set mercury 10 + random 1
           ]
           [
             set ph "none"
