@@ -50,7 +50,7 @@ to setup-patches
 end
 
 to setup-rain
-  ask n-of 10 patches with [pcolor != 15 or pcolor != 103 or pxcor <= 38 or pxcor >= 40 or pycor <= 8 or pycor >= 10] [ ;; don't land in places they can't go over
+  ask n-of 3 patches with [pcolor != 15 or pcolor != 103 or pxcor <= 38 or pxcor >= 40 or pycor <= 8 or pycor >= 10] [ ;; don't land in places they can't go over
     sprout 1 [
       set color blue
       set size .4
@@ -226,25 +226,25 @@ end
 
 to-report do
   let ps "not sampled"
-  ask meters with [color = black ] [ set ps [do] of patch-here ]
+  ask meters with [color = black ] [ set ps [oxygen] of patch-here ]
   report ps
 end
 
 to-report ni
   let ps "not sampled"
-  ask meters with [color = black ] [ set ps [ni] of patch-here ]
+  ask meters with [color = black ] [ set ps [nitrate] of patch-here ]
   report ps
 end
 
 to-report me
   let ps "not sampled"
-  ask meters with [color = black ] [ set ps [me] of patch-here ]
+  ask meters with [color = black ] [ set ps [mercury] of patch-here ]
   report ps
 end
 
 to-report phos
   let ps "not sampled"
-  ask meters with [color = black ] [ set ps [phos] of patch-here ]
+  ask meters with [color = black ] [ set ps [phosphate] of patch-here ]
   report ps
 end
 
