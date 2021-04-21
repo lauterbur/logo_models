@@ -50,7 +50,7 @@ to setup-patches
 end
 
 to setup-rain
-  ask n-of 30 patches with [pcolor != 15 or pcolor != 103 or pxcor <= 38 or pxcor >= 40 or pycor <= 8 or pycor >= 10] [ ;; don't land in places they can't go over
+  ask n-of 10 patches with [pcolor != 15 or pcolor != 103 or pxcor <= 38 or pxcor >= 40 or pycor <= 8 or pycor >= 10] [ ;; don't land in places they can't go over
     sprout 1 [
       set color blue
       set size .4
