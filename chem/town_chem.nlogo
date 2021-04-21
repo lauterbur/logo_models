@@ -213,7 +213,7 @@ to sample
             [ ifelse ([pcolor] of patch-at-heading-and-distance -180 1 = 9.9 or [pcolor] of patch-at-heading-and-distance -180 1 = 45) ;; road influence
   	      [
   	        set ph precision ( 7 + random-float 1 ) 1
-                set nitrate ( 2 + random-float 1 ) 1
+                set nitrate precision ( 2 + random-float 1 ) 1
                 set phosphate 20 + random 10
                 set oxygen precision ( 8 + random-float 1 ) 1
                 set mercury precision ( 0.00003 + random-float 0.000005 ) 6
