@@ -46,12 +46,13 @@ to setup
   set ag-patch patches with [pcolor = 34]
   set build-patch patches with [pcolor = 15]
   set creek-patch patches with [pcolor = 103]
+  set avoid-patch patches with [pxcor >= 38 and pxcor <= 40 and pycor >= 31 and pycor <= 29]
   setup-water
   reset-ticks
 end
 
 to setup-rain
-  ask n-of 3 patches with [pcolor != 15 or pcolor != 103 or pxcor <= 38 or pxcor >= 40 or pycor <= 8 or pycor >= 10] [ ;; don't land in places they can't go over
+  ask n-of 30 patches with [pcolor != 15 or pcolor != 103 or pxcor <= 38 or pxcor >= 40 or pycor <= 8 or pycor >= 10] [ ;; don't land in places they can't go over
     sprout 1 [
       set color blue
       set size .4
@@ -107,9 +108,9 @@ to rain  ;; forever button
               [ rt 40 ]
               [ lt 40 ]
             ]]
-            [ ifelse([pxcor] of patch-ahead 1 >= 38 and [pxcor] of patch-ahead 1 <= 40 and [pycor] of patch-ahead 1 >= 31 and [pycor] of patch-ahead 1 <= 29)
-            	[ while [[pxcor] of patch-ahead 1 >= 38 and [pxcor] of patch-ahead 1 <= 40 and [pycor] of patch-ahead 1 >= 31 and [pycor] of patch-ahead 1 <= 29]
-               [ ifelse ( (random 2) = 0 )
+            [ ifelse(patch-ahead 1 = avoid-patch)
+            	[ while [patch-ahead 1 = avoid-patch]
+		[ ifelse ( (random 2) = 0 )
                 [ rt 40 ]
                 [ lt 40 ]
               ]]
