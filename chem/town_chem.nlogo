@@ -1,5 +1,13 @@
 breed [meters meter]
-globals [rained?]
+globals [rained?
+  small-road-patch
+  large-road-patch
+  natural-patch
+  res-patch
+  ag-patch
+  build-patch
+  creek-patch
+]
 turtles-own
 [
 speed
@@ -31,6 +39,13 @@ to setup
       [
       [a b c] -> ask patch (a - 1) (b - 1) [set pcolor c]
     ])
+  set small-road-patch patches with [pcolor = 9.9]
+  set large-road-patch patches with [pcolor = 45]
+  set natural-patch patches with [pcolor = 63]
+  set res-patch patches with [pcolor = 38]
+  set ag-patch patches with [pcolor = 34]
+  set build-patch patches with [pcolor = 15]
+  set creek-patch patches with [pcolor = 103]
   setup-water
   reset-ticks
 end
@@ -63,31 +78,31 @@ to rain  ;; forever button
   ask turtles [
     look-for-water       ;; flow toward water
     wiggle
-    ifelse ([pcolor] of patch-ahead 1 = 9.9 or [pcolor] of patch-ahead 1 = 45 ) ;; goes fast on roads and parking lots
+    ifelse (patch-ahead 1 = small-road-patch or patch-ahead 1 = large-road-patch ) ;; goes fast on roads and parking lots
     [set speed 1]
-    [ifelse ([pcolor] of patch-ahead 1 = 63 );; goes more slowly in natural areas 
+    [ifelse (patch-ahead 1 = natural-patch );; goes more slowly in natural areas 
       [ ifelse (random-float 1 < 0.15) ;; sometimes gets absorbed in soil 
         [ die ]
         [ set speed 0.5 ] 
       ]
-      [ ifelse ([pcolor] of patch-ahead 1 = 34 ) ;; in agriculture, faster than natural but slower than roads
+      [ ifelse (patch-ahead 1 = ag-patch ) ;; in agriculture, faster than natural but slower than roads
         [ ifelse (random-float 1 < 0.1) ;; sometimes gets absorbed by soil;; 
           [die]
           [ set speed 0.75 ]
         ]
-        [ifelse ([pcolor] of patch-ahead 1 = 38 ) ;; in light ag/residential, faster than ag, slower than roads, small chance of absorption
+        [ifelse (patch-ahead 1 = res-patch ) ;; in light ag/residential, faster than ag, slower than roads, small chance of absorption
           [ifelse (random-float 1 < 0.05)
             [die]
             [set speed 0.9]
           ]
-        [ ifelse ([pcolor] of patch-ahead 1 = 15) ;; set this to building colors
-          [ while [ [pcolor] of patch-ahead 1 = 15 ] 
+          [ ifelse (patch-ahead 1 = build-patch) ;; set this to building colors
+            [ while [ patch-ahead 1 = build-patch ] 
            [ ifelse ( (random 2) = 0 )
             [ rt 40 ]
             [ lt 40 ]
           ]]
-       	  [ ifelse([pcolor] of patch-ahead 1 = 103)
-            [ while [ [pcolor] of patch-ahead 1 = 103] 
+       	  [ ifelse(patch-ahead 1 = creek-patch)
+            [ while [ patch-ahead 1 = creek-patch] 
              [ ifelse ( (random 2) = 0 )
               [ rt 40 ]
               [ lt 40 ]
