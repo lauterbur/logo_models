@@ -158,13 +158,13 @@ to-report water-scent-at-angle [angle]
 end
 
 to choose-sampling-location
-  ask meters with [color = white] [die]
+  ask meters with [color = pink] [die]
   ask meters with [color = black] [die]
   ifelse rained?
 	[  ask one-of patches with [pcolor = 95 ] 	
   	[
     	sprout-meters 1 [
-      	    set color white
+      	    set color pink
         	  set shape "circle"
     	]
     ]
@@ -174,7 +174,7 @@ end
 
 to sample
   ifelse rained?
-  [  ask turtles with [color = white]
+  [  ask turtles with [color = pink]
     [ 
     set color black
     set heading 45
@@ -281,7 +281,7 @@ end
 
 ;directions!  
 to up
-  ask meters with [color = white]
+  ask meters with [color = pink]
   [set heading 360
   ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
   ;;		[turtle-move]
@@ -290,7 +290,7 @@ to up
  end
 
 to down
-  ask meters with [color = white]
+  ask meters with [color = pink]
   [set heading 180
   ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
   ;;		[turtle-move]
@@ -299,7 +299,7 @@ to down
 end
 
 to go_right
-  ask meters with [color = white]
+  ask meters with [color = pink]
   [set heading 90
   ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
   ;;		[turtle-move]
@@ -309,7 +309,7 @@ to go_right
 end
 
 to go_left
-  ask meters with [color = white]
+  ask meters with [color = pink]
   [set heading 270
   ;;  if ([pcolor] of patch-ahead 1 = 95 or [pcolor] of patch-at 1 1 = 95 or [pcolor] of patch-at -1 1 = 95 or [pcolor] of patch-at 1 -1 = 95 or [pcolor] of patch-at -1 -1 = 95)
   ;;		[turtle-move]
