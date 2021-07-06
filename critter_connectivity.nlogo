@@ -1,14 +1,17 @@
 breed [rabbits rabbit]
 rabbits-own [speed
 							angle
-  						bridge-angle]
+  						bridge-angle
+  					  side]
 breed [bugs bug]
 bugs-own [speed
 					angle
-  				bridge-angle]
+  				bridge-angle
+  				side]
 breed [butterflies butterfly]
 butterflies-own [speed
-								 angle]
+								 angle
+  							side]
 globals [bridge?]
 patches-own [road?]
 
@@ -44,6 +47,7 @@ to setupRabbits
   ask n-of 50 patches with [pxcor < -8 and pxcor > -19 and pycor > -18 and pycor < 18] [
     sprout-rabbits 1 [
       set color orange
+      set side 0
       set speed 1
       set angle 360
       set bridge-angle 10
@@ -52,6 +56,7 @@ to setupRabbits
     ask n-of 50 patches with [pxcor > 8 and pxcor < 19 and pycor > -18 and pycor < 18] [
     sprout-rabbits 1 [
       set color violet 
+      set side 1
       set speed 1
       set angle 360
       set bridge-angle 10
@@ -64,6 +69,7 @@ to setupBugs
   ask n-of 50 patches with [pxcor < -8] [
     sprout-bugs 1 [
       set color orange
+      set side 0
       set speed .4
       set angle 360
       set bridge-angle 10
@@ -72,6 +78,7 @@ to setupBugs
     ask n-of 50 patches with [pxcor > 8] [
     sprout-bugs 1 [
       set color violet 
+      set side 1
       set speed .4
       set angle 360
       set bridge-angle 10
@@ -84,6 +91,7 @@ to setupButterflies
   ask n-of 50 patches with [pxcor < -8 and pxcor > -19] [
     sprout-butterflies 1 [
       set color orange
+      set side 0
       set speed 1
       set angle 360
     ]
@@ -91,6 +99,7 @@ to setupButterflies
   ask n-of 50 patches with [pxcor > 8 and pxcor < 19] [
     sprout-butterflies 1 [
       set color violet 
+      set side 1
       set speed 1
       set angle 360
 		]
@@ -139,20 +148,22 @@ to move  ;; rabbit procedure
 end
 
 to sample-left
-  ask n-of 5 turtles with [pxcor < -8]  [ set color orange ]
+  ask n-of 5 turtles with [pxcor < -8]  [ set color white ]
   let x_list (list 1 2 3 4 5)
   output-print "left side"
-  foreach x_list [
-    [x] ->
-    output-print ""
-    ;;[x] ->
-    sample-sats-left x
+  ask turtles with [color = white]
+  [
+    ifelse side = 0  [
+      set color orange
+      sample-sats-left]
+ [ set color violet
+   sample-sats-right]
   ]
   output-print ""
   output-print ""
 end
 
-to sample-sats-left [x]
+to sample-sats-left
   let Hsat1 one-of ["H243" "H236"]
   let Xsat1 one-of ["X122" "X130"]
   let Ksat1 one-of ["K85" "K94"]
@@ -163,29 +174,31 @@ to sample-sats-left [x]
   let Ksat2 one-of ["K85" "K94"]
   let Ysat2 one-of ["Y401" "Y399"]
   let Asat2 one-of ["A324" "A319"]
-  output-type x output-type ": " 
+ ;; output-type x output-type ": " 
   output-type Hsat1 output-type "/" output-type Hsat2 output-type " " 
   output-type Xsat1 output-type "/" output-type Xsat2 output-type " " 
   output-type Ksat1 output-type "/" output-type Ksat2 output-type " " 
   output-type Ysat1 output-type "/" output-type Ysat2 output-type " " 
-  output-type Asat1 output-type "/" output-type Asat2
+  output-type Asat1 output-type "/" output-type Asat2 output-type "\n"
 end
 
 to sample-right
-  ask n-of 5 turtles with [pxcor > 8]  [ set color violet ]
+  ask n-of 5 turtles with [pxcor > 8]  [ set color white ]
   let x_list (list 1 2 3 4 5)
-  output-print "right side"
-  foreach x_list [
-    [x] ->
-    output-print ""
-    ;;[x] ->
-    sample-sats-right x
+  output-print "left side"
+  ask turtles with [color = white]
+  [
+    ifelse side = 0  [
+      set color orange
+      sample-sats-left]
+ [ set color violet
+   sample-sats-right]
   ]
   output-print ""
   output-print ""
 end
 
-to sample-sats-right [x]
+to sample-sats-right 
   let Hsat1 one-of ["H251" "H236"]
   let Xsat1 one-of ["X125" "X133"]
   let Ksat1 one-of ["K85" "K94"]
@@ -196,13 +209,14 @@ to sample-sats-right [x]
   let Ksat2 one-of ["K85" "K94"]
   let Ysat2 one-of ["Y408" "Y392"]
   let Asat2 one-of ["A326" "A315"]
-  output-type x output-type ": " 
+ ;; output-type x output-type ": " 
   output-type Hsat1 output-type "/" output-type Hsat2 output-type " " 
   output-type Xsat1 output-type "/" output-type Xsat2 output-type " " 
   output-type Ksat1 output-type "/" output-type Ksat2 output-type " " 
   output-type Ysat1 output-type "/" output-type Ysat2 output-type " " 
-  output-type Asat1 output-type "/" output-type Asat2
+  output-type Asat1 output-type "/" output-type Asat2 output-type "\n"
 end
+
 
 @#$#@#$#@
 GRAPHICS-WINDOW
