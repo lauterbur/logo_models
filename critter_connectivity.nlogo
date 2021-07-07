@@ -1,4 +1,8 @@
 breed [rabbits rabbit]
+globals [bridge?
+  road-patch
+  bridge-patch
+	grass-patch]
 rabbits-own [speed
 							angle
   						bridge-angle
@@ -12,7 +16,7 @@ breed [butterflies butterfly]
 butterflies-own [speed
 								 angle
   							side]
-globals [bridge?]
+
 patches-own [road?]
 
 
@@ -29,15 +33,21 @@ to setup
       if (pycor < 2 and pycor > -2 and pxcor > -10 and pxcor < 10) [set pcolor brown]
     ]
   ]
-  if bridge
+  ifelse bridge and bridge_cover = 0
     [
-      ask n-of ( (51 * bridge_cover + 5) / 100 ) patches with [pcolor = brown] [ set pcolor green ]
+      ask n-of ( (57 * bridge_cover + 100 ) / 100 ) patches with [pcolor = brown] [ set pcolor green ]
   	]
+  	[ ask n-of ( (57 * bridge_cover) / 100 ) patches with [pcolor = brown] [ set pcolor green ]
+  ]
+  set road-patch patches with [pcolor = grey or pcolor = yellow]
+  set grass-patch patches with [pcolor = green]
+  set bridge-patch patches with [pcolor = brown]
+;;  output-show count road-patch
   ifelse Critter = "squirrel" 
   [ setupRabbits ]
   [ ifelse Critter = "turtle"
     [ setupBugs ]
-  	[ setupButterflies ]
+  	[ setupButterflies ]    
   ]
   reset-ticks
 end
@@ -117,7 +127,7 @@ to go
 end
 
 to move  ;; rabbit procedure
-
+ ;; if member? patch-ahead 1 road-patch [set color white fd 1]
   if not can-move? 1 [rt 180]
 
 	ifelse Critter = "butterfly"
@@ -125,25 +135,50 @@ to move  ;; rabbit procedure
       lt random-float angle
       fd speed
     ]
-  	[ 
-      ifelse ([pcolor] of patch-ahead 1 = grey )
-      [rt 90 + random-float 180 ]
-      	[ ifelse ([pcolor] of patch-ahead 1 = yellow)
-          [ rt 90 + random-float 180 ]
-          [ifelse road? 
-           [
-            ;; rt random-float bridge-angle
-            ;; lt random-float bridge-angle
-             fd speed * (bridge_cover / 100)
-           ]
-           [ 
-             rt random-float 10
-             lt random-float 10
-             fd speed
-           ]
-         ]
- 		 ]
+  [ ifelse member? patch-ahead 1 bridge-patch 
+    [ifelse bridge_cover = 0 [fd speed * ((bridge_cover + 1) / 100)
+      set heading heading - (5 - random 10 )
+      ][
+        fd speed * ((bridge_cover) / 100)
+      rt 180 - random ((bridge_cover * 180) / 100)
+      lt random ((bridge_cover * 180) / 100)]
 ]
+    [ifelse member? patch-ahead 1 road-patch [
+      rt 180
+      lt 145 + random 90
+     ;; fd speed 
+      ]
+      [rt random-float 10
+          lt random-float 10
+          fd speed
+        ]
+      ]
+  ]
+ ;;     ifelse road? 
+  ;;    [rt 180 
+   ;;     fd speed]
+    ;;  	[ ifelse ([pcolor] of patch-ahead 1 = yellow)
+     ;;     [ rt 90 + random-float 180 
+      ;;      fd speed]
+       ;;   [ifelse road? 
+        ;;   [
+         ;;    ifelse bridge_cover = 0
+          ;;   [rt 145 + random 90
+           ;;    fd speed * ((bridge_cover + 1) / 100)]
+   ;;        ;;  rt random-float bridge-angle
+    ;;        ;; lt random-float bridge-angle
+      ;;         [fd speed * ((bridge_cover + 10) / 100)]
+        ;;   ]
+         ;;   ;;[ ifelse [pcolor] of patch-here = brown [rt 90]
+          ;;    [
+           ;;  rt random-float 10
+            ;; lt random-float 10
+           ;;  fd speed
+  ;;         ]
+   ;;      ]
+ 		;; ]
+     ;;     ;;]
+;;]
 
 end
 
@@ -154,9 +189,10 @@ to sample-left
   ask turtles with [color = white]
   [
     ifelse side = 0  [
-      set color orange
+     ;; set color orange
       sample-sats-left]
- [ set color violet
+ [ 
+;;set color violet
    sample-sats-right]
   ]
   output-print ""
@@ -185,13 +221,14 @@ end
 to sample-right
   ask n-of 5 turtles with [pxcor > 8]  [ set color white ]
   let x_list (list 1 2 3 4 5)
-  output-print "left side"
+  output-print "right side"
   ask turtles with [color = white]
   [
     ifelse side = 0  [
-      set color orange
+   ;;   set color orange
       sample-sats-left]
- [ set color violet
+ [ 
+;;set color violet
    sample-sats-right]
   ]
   output-print ""
