@@ -38,7 +38,7 @@ to setup
 end
 
 ;; setup wifi by location
-to setup-wifi
+to setup-wifi 
   ask patches [
     set signal ("NA")
   ]
@@ -134,11 +134,11 @@ ticks
 30
 
 BUTTON
-20
+60
 15
-100
+140
 75
-install
+setup
 setup
 NIL
 1
@@ -151,10 +151,10 @@ NIL
 1
 
 BUTTON
-20
-87
-100
-147
+60
+240
+140
+300
 NIL
 up
 NIL
@@ -169,9 +169,9 @@ NIL
 
 BUTTON
 20
-155
-55
-215
+310
+96
+370
 left
 go_left
 NIL
@@ -185,10 +185,10 @@ NIL
 1
 
 BUTTON
-65
-155
-100
-215
+105
+310
+180
+370
 right
 go_right
 NIL
@@ -202,10 +202,10 @@ NIL
 1
 
 BUTTON
-19
-224
-100
-284
+60
+380
+141
+440
 NIL
 down
 NIL
@@ -219,15 +219,42 @@ NIL
 1
 
 MONITOR
-6
-305
-116
-368
+10
+455
+200
+518
 wifi signal
 signal-level
 0
 1
 20
+
+BUTTON
+10
+160
+190
+220
+install wifi
+setup-wifi
+NIL
+1
+T
+OBSERVER
+NIL
+NIL
+NIL
+NIL
+1
+
+CHOOSER
+10
+85
+200
+130
+proposal
+proposal
+"1-1" "2-2" "3-3"
+0
 @#$#@#$#@
 ## WHAT IS IT?
 
