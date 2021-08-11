@@ -298,7 +298,7 @@ CHOOSER
 130
 proposal
 proposal
-"1-1" "2-2" "3-3"
+"directed wifi" "omnidirectional wifi" "copper wire"
 2
 @#$#@#$#@
 ## WHAT IS IT?
